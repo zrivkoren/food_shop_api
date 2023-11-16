@@ -138,3 +138,6 @@ dmypy.json
 .idea
 /foodshop/manage.py
 /foodshop/uploads/
+/foodshop/products/migrations/
+/foodshop/api/migrations/
+/foodshop/media/
