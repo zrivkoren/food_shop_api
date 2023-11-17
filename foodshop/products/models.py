@@ -1,9 +1,9 @@
 import os
 from io import BytesIO
-
-from django.db import models
 from django.core.files.base import ContentFile
 from PIL import Image
+from django.db import models
+from django.contrib.auth.models import User
 
 
 class Category(models.Model):
@@ -59,7 +59,6 @@ class Product(models.Model):
             img.save(img_io, format='JPEG')
             self.image_small.save(os.path.basename(self.image_large.path), ContentFile(img_io.getvalue()), save=False)
 
-            # Удаляем исходное изображение после сохранения его копий
             if os.path.exists(original_path):
                 os.remove(original_path)
 
@@ -72,3 +71,9 @@ class Product(models.Model):
         ordering = ['name']
         verbose_name = 'Продукт'
         verbose_name_plural = 'Продукты'
+
+
+class Cart(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    quantity = models.PositiveIntegerField(default=1)
