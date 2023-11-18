@@ -38,21 +38,18 @@ class Product(models.Model):
             img = Image.open(self.image_large.path)
             original_path = self.image_large.path
 
-            # Изменяем размер и сохраняем большое изображение
             output_size = (800, 800)
             img.thumbnail(output_size, Image.LANCZOS)
             img_io = BytesIO()
             img.save(img_io, format='JPEG')
             self.image_large.save(os.path.basename(self.image_large.path), ContentFile(img_io.getvalue()), save=False)
 
-            # Изменяем размер и сохраняем среднее изображение
             output_size = (500, 500)
             img.thumbnail(output_size, Image.LANCZOS)
             img_io = BytesIO()
             img.save(img_io, format='JPEG')
             self.image_medium.save(os.path.basename(self.image_large.path), ContentFile(img_io.getvalue()), save=False)
 
-            # Изменяем размер и сохраняем маленькое изображение
             output_size = (300, 300)
             img.thumbnail(output_size, Image.LANCZOS)
             img_io = BytesIO()

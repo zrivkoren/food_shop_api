@@ -23,6 +23,11 @@ class ProductsSerializer(serializers.ModelSerializer):
 
 
 class CartSerializer(serializers.ModelSerializer):
+    product_price = serializers.SerializerMethodField()
+
     class Meta:
         model = Cart
-        fields = ['product', 'quantity']
+        fields = ['product', 'product_price', 'quantity']
+
+    def get_product_price(self, obj):
+        return obj.product.price
